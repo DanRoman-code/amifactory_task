@@ -27,7 +27,7 @@ class Person(models.Model):
     types = models.CharField(max_length=1, choices=PROFESSION_SEGMENT_CHOICES)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name} {self.types}"
 
 
 class Movie(models.Model):
@@ -40,7 +40,7 @@ class Movie(models.Model):
         ("R", "Restricted"),
         ("NC-17", "Adults Only"),
     )
-    title = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=50)
     description = models.CharField(max_length=5000)
     poster = models.FileField(upload_to="poster/")
     bg_picture = models.FileField(upload_to="bg_picture/")
@@ -51,19 +51,21 @@ class Movie(models.Model):
     )
     duration = models.IntegerField()
     genres = models.ManyToManyField(
-        Genre, null=True, blank=True, related_name="movie_genres"
+        Genre, related_name="movie_genres"
     )
     directors = models.ManyToManyField(Person, related_name="movie_directors")
     writers = models.ManyToManyField(Person, related_name="movie_writers")
     stars = models.ManyToManyField(
-        Person, null=True, blank=True, related_name="movie_stars"
+        Person, related_name="movie_stars"
     )
 
     class Meta:
         ordering = ["-id"]
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.title} " \
+               f"imdb rating: {self.imdb_rating} " \
+               f"duration: {self.duration}"
 
 
 class Directors(models.Model):
