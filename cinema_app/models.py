@@ -46,7 +46,9 @@ class Movie(models.Model):
     bg_picture = models.FileField(upload_to="bg_picture/")
     release_year = models.PositiveSmallIntegerField()
     mpa_rating = models.CharField(max_length=5, choices=RATING_SEGMENT_CHOICES)
-    imdb_rating = models.FloatField(
+    imdb_rating = models.DecimalField(
+        max_digits=3,
+        decimal_places=1,
         validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
     duration = models.IntegerField()
