@@ -13,6 +13,7 @@ def convert_movie_to_dict(movie: Movie) -> dict:
         "description": movie.description,
         "release_year": movie.release_year,
         "mpa_rating": movie.mpa_rating,
+        "imdb_rating": float(movie.imdb_rating),
         "duration": movie.duration,
         "poster": movie.poster.url,
         "bg_picture": movie.bg_picture.url,
